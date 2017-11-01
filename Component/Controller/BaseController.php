@@ -2,8 +2,6 @@
 namespace Component\Controller;
 abstract class BaseController
 {
-    protected $Params = [];
-    protected $Post   = [];
     protected $view   = '';
     protected $request = '';
 
@@ -38,7 +36,7 @@ abstract class BaseController
     public function render($tpl)
     {
         return $this->view->render($tpl);
-        //return new \Component\Http\Response($content);
+        //return new \Component\Http\Response($content)->send();
     }
 
     public function toJson($data)

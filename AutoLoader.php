@@ -5,15 +5,26 @@ class AutoLoad
     {
         spl_autoload_register(function($class){
 
+            $class_map =[];
+
+            $class_map['WebDefaultIndexController'] = ROOT_PATH.'ByZanTium/Component/Controller/WebDefaultIndexController.php';
+            $class_map['TaskDefaultIndexController'] = ROOT_PATH.'ByZanTium/Component/Controller/TaskDefaultIndexController.php';
+
             $POSTFIX_DIR_Array = array(
                 ROOT_PATH."ByZanTium",
-                ROOT_PATH."ByZanTium/Component/Controller",
+                PRJ_PATH."cli",
                 PRJ_PATH."app/controller",
                 PRJ_PATH."app/models",
                 PRJ_PATH."app/service",
                 PRJ_PATH."app/views",
-                PRJ_PATH."cli",
             );
+
+            if(isset($class_map[$class])){
+                $class = $class_map[$class];
+                include $class;
+                return true;
+            }
+
 
             foreach($POSTFIX_DIR_Array as $POSTFIX_DIR)
             {
@@ -21,8 +32,6 @@ class AutoLoad
                 $class = str_replace('\\', '/', $class);
 
                 $fn    = $POSTFIX_DIR.DIRECTORY_SEPARATOR.$class.".php";
-
-                #echo $fn."<br />";
 
                 if (file_exists($fn))
                 {
@@ -34,5 +43,10 @@ class AutoLoad
             return false;
 
         });
+    }
+
+    public static function import($filename)
+    {
+        return file_exists($filename)?include $filename:[];
     }
 }

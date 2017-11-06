@@ -7,5 +7,5 @@ interface RouterInterface
     public function setController($controllerName);
     public function setActionName($actionName);
     public function setParams($Params);
-    public function route(\Component\Http\Request $request);
+    public function route(\Component\Http\Request $request,\Component\Router\Route $route);
 }

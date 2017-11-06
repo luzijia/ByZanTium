@@ -10,9 +10,7 @@ class App
 			$container->run();
 		}catch(\Exception $e)
 		{
-            //todo default page or json data
 			echo $e->getMessage();
 		}
 	}
-
 }

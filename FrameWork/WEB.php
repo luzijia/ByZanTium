@@ -14,15 +14,7 @@ final class WEB extends \FrameWork\Base
 
         $router  = new \Component\Router\Router();
 
-        list($c,$a) = $router->route($request);
-
-        $c          = empty($c)?$this->defaultController:$c;
-        $a          = empty($a)?$this->defaultAction:$a;
-
-        $router->setController($c);
-        $router->setActionName($a);
-
-        $this->setRouter($router);
+        $this->setRouter($router->route($request,$this->route));
     }
 
     public function run()
@@ -33,6 +25,11 @@ final class WEB extends \FrameWork\Base
         if(!method_exists($controllerName,$actionName))
         {
             throw new CLIException("actionName:{$actionName} IS WRONG!",1002);
+        }
+
+        foreach($this->router->Params as $k=>$v)
+        {
+            $this->request->query->set($k,$v);
         }
 
         $controllerName->setRequest($this->request);

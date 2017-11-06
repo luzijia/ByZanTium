@@ -3,9 +3,15 @@ namespace Component\Router;
 
 class Router implements \Component\Router\RouterInterface
 {
+    public $moduleName     = '';
     public $controllerName = '';
     public $actionName     = '';
     public $Params         = [];
+
+    public function setModuleName($moduleName)
+    {
+        $this->moduleName = $moduleName;
+    }
 
     public function setController($controllerName)
     {
@@ -22,23 +28,16 @@ class Router implements \Component\Router\RouterInterface
         $this->Params = $params;
     }
 
-    public function route(\Component\Http\Request $request)
+    public function route(\Component\Http\Request $request,\Component\Router\Route $route)
     {
-        $uri        = explode("/",$request->uri->getPath());
-        //match vs self-router /api/detail/{$id}/
-        //match vs self-router /api/list/{$page}/
-        $controller = strip_tags(ucfirst($uri[1]));
-        $func       = strip_tags(ucfirst($uri[2]));
-        return [$controller,$func];
-    }
+        $info = $route->ruleRoute($request);
 
-    public function addRouter()
-    {
+        $this->setModuleName($info['m']);
+        $this->setController($info['c']);
+        $this->setActionName($info['a']);
+        $this->setParams($info['p']);
 
-    }
-
-    public function rule()
-    {
+        return $this;
     }
 }
 

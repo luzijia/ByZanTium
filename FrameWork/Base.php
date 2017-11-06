@@ -5,6 +5,8 @@ abstract class Base
 {
     protected $appName = '';
 
+    protected $moduleName     = '';
+
     protected $controllerName = '';
 
     protected $actionName     = '';
@@ -19,11 +21,15 @@ abstract class Base
 
     protected $layout         = '';
 
+    protected $route          = '';
+
     abstract public function run();
 
     public function __construct($_appName)
     {
         $this->appName = $_appName;
+
+        $this->route   = new \Component\Router\Route();
     }
 
     public function setRouter(\Component\Router\Router $_router)
@@ -43,10 +49,10 @@ abstract class Base
 
     public function getController()
     {
+        $moduleName     = $this->router->moduleName;
         $controllerName = ucfirst($this->router->controllerName)."Controller";
-        if($controllerName=='ApiController'){
-            //how to add $moduleName router???
-            $controllerName='\\api\\'.$controllerName;
+        if($this->router->moduleName){
+           $controllerName='\\'.$this->router->moduleName.'\\'.$controllerName;
         }
         $ins = new $controllerName();
         return $ins;

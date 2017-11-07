@@ -4,6 +4,7 @@ abstract class BaseController
 {
     protected $view   = '';
     protected $request = '';
+    protected $Params = [];
 
     abstract function beforeAction();
     abstract function afterAction();
@@ -23,6 +24,16 @@ abstract class BaseController
         return $this->request->post->get($key);
     }
 
+    public function setCliParams($Params)
+    {
+        $this->Params = $Params;
+    }
+
+    public function getParams($key)
+    {
+        return isset($this->Params[$key])?$this->Params[$key]:'';
+    }
+
     public function setView(\Component\View\View $view)
     {
         $this->view = $view;
@@ -33,14 +44,14 @@ abstract class BaseController
         $this->view->assign($key,$value);
     }
 
-    public function render($tpl)
+    public function display($tpl)
     {
-        return $this->view->render($tpl);
-        //return new \Component\Http\Response($content)->send();
+        $content = $this->view->render($tpl);
+        \Component\Http\Response::create($content)->send()->getContent();
     }
 
-    public function toJson($data)
+    public function toJson($data=array())
     {
-        //return new \Component\Http\Response($data)->toJson();
+        \Component\Http\Response::create()->toJson($data);
     }
 }

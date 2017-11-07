@@ -42,16 +42,16 @@ final class CLI extends \FrameWork\Base
 
     public function run()
     {
-        echo $this->appName." is running...\n";
         $controllerName = $this->getController();
         $actionName     = $this->getActionName();
 
         if(!method_exists($controllerName,$actionName))
         {
-            throw new CLIException("actionName:{$actionName} IS WRONG!",1002);
+            die("actionName:{$actionName} IS WRONG!");
+            #throw new CLIException("actionName:{$actionName} IS WRONG!",1002);
         }
 
-        $controllerName->setParams($this->router->Params);
+        $controllerName->setCliParams($this->router->Params);
 
         $controllerName->beforeAction();
 

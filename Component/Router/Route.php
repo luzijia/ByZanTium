@@ -6,11 +6,10 @@
 //  // $_GET['page'] = 1
 //     $_GET['cate'] = 2;
 //  //rewrite
-//  Route->set("/videoAudit/getList/{page}/{$page}","admin","VideoAuditController",false);
-//  Route->set(["URI"=>["Module","Ctr","Action","IsRewrite"]])
 //)
 namespace Component\Router;
 
+#美化URI支持多少个参数对，默认支持6组参数
 define('SELF_PARAMES_LENGTH',6);
 
 class Route

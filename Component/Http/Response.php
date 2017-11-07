@@ -5,6 +5,8 @@ class Response
 {
     protected $content;
 
+    protected $data;
+
     protected $contentType = 'text/html';
 
     protected $charset = 'utf-8';
@@ -113,7 +115,8 @@ class Response
 
     public function getContent()
     {
-        return $this->content;
+        echo $this->content;
+        exit;
     }
 
     public function setContentType($contentType, $charset = null)
@@ -198,10 +201,6 @@ class Response
     {
         $this->content = (string) $this->content;
 
-        foreach ($this->outputFilters as $outputFilter) {
-            $this->content = $outputFilter($this->content);
-        }
-
         echo $this->content;
 
         return $this;
@@ -236,8 +235,44 @@ class Response
         return $this;
     }
 
-    public function toJson()
+	public function sendHeaders()
+	{
+		// headers have already been send by the developer
+		$headersList = headers_list();
+		if (!empty($headersList)) {
+			return $this;
+		}
+
+		header(sprintf('HTTP/%s %s %s', $this->version, $this->statusCode, $this->statusCodes[$this->statusCode]), true, $this->statusCode);
+
+		$contentType = $this->contentType;
+
+		if(stripos($contentType, 'text/') === 0 || in_array($contentType, array('application/json', 'application/xml'))) {
+			$contentType .= '; charset=' . $this->charset;
+		}
+
+		header('Content-Type: ' . $contentType);
+
+		foreach($this->headers as $name => $headers) {
+			if (!is_array($headers)) {
+				$headers = array($headers);
+			}
+			foreach($headers as $value) {
+				header($name . ': ' . $value, false, $this->statusCode);
+			}
+		}
+		return $this;
+	}
+
+    private function getData()
     {
+        return $this->data;
+    }
+
+    public function toJson($data)
+    {
+        $this->data = json_encode($data);
         $this->setContentType('application/json');
+        echo $this->send()->getData();exit;
     }
 }

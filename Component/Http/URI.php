@@ -108,9 +108,20 @@ return $this->getHostUrl().$this->path.(($tmp = $this->getQuery()) ? '?'.$tmp :'
 		return $this->getHostUrl() . $this->getPath();
 	}
 
+    public function isAjax()
+    {
+        return $this->getHeader('X-Requested-With') === 'XMLHttpRequest';
+    }
+
 	private function getHostUrl()
 	{
 		return $this->scheme."://".($this->authority['user']?$this->authority['user'].':':'').($this->authority['password']?$this->authority['password'].'@':'').$this->authority['host'].":".$this->authority['port'];
+	}
+
+	public function getHeader($header, $default = null)
+	{
+		$header = strtolower($header);
+		return isset($this->headers[$header]) ? $this->headers[$header] : $default;
 	}
 
 }

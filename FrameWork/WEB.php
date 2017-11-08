@@ -22,10 +22,10 @@ final class WEB extends \FrameWork\Base
         $controllerName = $this->getController();
         $actionName     = $this->getActionName();
 
-        if(!method_exists($controllerName,$actionName))
-        {
-            throw new CLIException("actionName:{$actionName} IS WRONG!",1002);
-        }
+        #if(!method_exists($controllerName,$actionName))
+        #{
+            #throw new CLIException("actionName:{$actionName} IS WRONG!",1002);
+        #}
 
         foreach($this->router->Params as $k=>$v)
         {
@@ -42,12 +42,5 @@ final class WEB extends \FrameWork\Base
         $controllerName->afterAction();
 
     }
-
-    public function __call($method,$params)
-    {
-        //if ajax return wrong msg
-        //elseif page return wrong page
-    }
-
 }
 

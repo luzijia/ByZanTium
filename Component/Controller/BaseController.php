@@ -47,11 +47,23 @@ abstract class BaseController
     public function display($tpl)
     {
         $content = $this->view->render($tpl);
-        \Component\Http\Response::create($content)->send()->getContent();
+        \Component\Http\Response::create($content)->send();
     }
 
     public function toJson($data=array())
     {
         \Component\Http\Response::create()->toJson($data);
     }
+
+    public function __call($method,$params)
+    {
+        $content = "NO $method ! ";
+        if($this->request->uri->isAjax()){
+            $data = array("errno"=>10001,"msg"=>$content);
+            \Component\Http\Response::create()->toJson($data);
+        }else{
+            \Component\Http\Response::create($content)->send();
+        }
+    }
+
 }

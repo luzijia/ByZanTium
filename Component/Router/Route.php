@@ -28,6 +28,8 @@ class Route
 
         $uri        = $request->uri->getPath();
 
+        $path       = explode("/",ltrim($uri,"/"));
+
         $module     = $controller = $action = '';
 
         $params     = [];
@@ -47,7 +49,7 @@ class Route
                 {
                     $module     = $data[0];
                     $controller = strip_tags(ucfirst($data[1]));
-                    $action     = strip_tags(ucfirst($data[2]));
+                    $action     = $path[1];
                     $params     = $this->makePregParams($matches,$request);
                 }
             }

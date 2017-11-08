@@ -28,16 +28,28 @@ class Route
 
         $uri        = $request->uri->getPath();
 
-        foreach($this->datas as $pattern=>$data)
-        {
-            $pattern = $this->makePregRex($pattern);
-            $ret  = preg_match($pattern,$uri,$matches);
-            if($ret>0)
+        $module     = $controller = $action = '';
+
+        $params     = [];
+
+        if(isset($this->datas[$uri])){
+            $module     = $this->datas[$uri][0];
+            $controller = $this->datas[$uri][1];
+            $action     = $this->datas[$uri][2];
+            $params     = [];
+
+        }else{
+            foreach($this->datas as $pattern=>$data)
             {
-                $module     = $data[0];
-                $controller = strip_tags(ucfirst($data[1]));
-                $action     = strip_tags(ucfirst($data[2]));
-                $params     = $this->makePregParams($matches,$request);
+                $pattern = $this->makePregRex($pattern);
+                $ret  = preg_match($pattern,$uri,$matches);
+                if($ret>0)
+                {
+                    $module     = $data[0];
+                    $controller = strip_tags(ucfirst($data[1]));
+                    $action     = strip_tags(ucfirst($data[2]));
+                    $params     = $this->makePregParams($matches,$request);
+                }
             }
         }
         return ["m"=>$module,"c"=>$controller,"a"=>$action,'p'=>$params];

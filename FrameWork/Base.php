@@ -49,9 +49,11 @@ abstract class Base
 
     public function getController()
     {
-        #todo default Controller and Action
         $moduleName     = $this->router->moduleName;
-        $controllerName = ucfirst($this->router->controllerName)."Controller";
+
+        $controllerName = $this->router->controllerName?$this->router->controllerName:$this->defaultController;
+        $controllerName =  ucfirst($controllerName)."Controller";
+
         if($this->router->moduleName){
            $controllerName='\\'.$this->router->moduleName.'\\'.$controllerName;
         }
@@ -61,6 +63,6 @@ abstract class Base
 
     public function getActionName()
     {
-        return ucfirst($this->router->actionName)."Action";
+        return ucfirst($this->router->actionName?$this->router->actionName:$this->defaultAction)."Action";
     }
 }

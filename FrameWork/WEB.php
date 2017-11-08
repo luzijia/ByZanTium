@@ -43,5 +43,11 @@ final class WEB extends \FrameWork\Base
 
     }
 
+    public function __call($method,$params)
+    {
+        //if ajax return wrong msg
+        //elseif page return wrong page
+    }
+
 }
 

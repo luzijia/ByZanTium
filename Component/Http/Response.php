@@ -237,11 +237,6 @@ class Response
 
 	public function sendHeaders()
 	{
-		// headers have already been send by the developer
-		$headersList = headers_list();
-		if (!empty($headersList)) {
-			return $this;
-		}
 
 		header(sprintf('HTTP/%s %s %s', $this->version, $this->statusCode, $this->statusCodes[$this->statusCode]), true, $this->statusCode);
 

@@ -28,8 +28,11 @@ abstract class Base
     public function __construct($_appName)
     {
         $this->appName = $_appName;
+    }
 
-        $this->route   = new \Component\Router\Route();
+    public function setRoute(\Component\Router\Route $_route)
+    {
+        $this->route   = $_route;
     }
 
     public function setRouter(\Component\Router\Router $_router)

@@ -1,7 +1,7 @@
 <?php
 namespace Component\DB;
 
-class RedisProxy
+class RedisBase
 {
 	private $_redis = null;
 

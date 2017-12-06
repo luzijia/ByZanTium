@@ -27,8 +27,6 @@ class AutoLoad
 
             $composer_class = self::loadComposer();
 
-
-
             foreach($composer_class as $pkey=>$pvalue)
             {
                 if(strpos($class,$pkey)!==false)
@@ -57,6 +55,7 @@ class AutoLoad
 
     private static function registerClass($fn)
     {
+        $fn = str_replace("\\","/",$fn);
         if (file_exists($fn))
         {
             require_once $fn;

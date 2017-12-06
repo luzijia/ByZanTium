@@ -1,5 +1,16 @@
 <?php
+
 namespace Component\View;
+
+require_once ROOT_PATH."/ByZanTium/Vendor/blade/src/helpers.php";
+
+use Vendor\Blade\FileViewFinder;
+use Vendor\Blade\Factory;
+use Vendor\Blade\Compilers\BladeCompiler;
+use Vendor\Blade\Engines\CompilerEngine;
+use Vendor\Blade\Filesystem;
+use Vendor\Blade\Engines\EngineResolver;
+
 
 class View extends \Component\View\ViewInterfce
 {
@@ -25,14 +36,35 @@ class View extends \Component\View\ViewInterfce
 
     public function render($tpl)
     {
-        if($this->datas) extract($this->datas);
         $path = explode(".",$tpl);
-        $file = PRJ_PATH.'app/views/'.$path[0].'/'.$path[1].".tpl.php";
-        ob_start();
-        include $file;
-        ob_end_flush();
-        return ob_get_contents();
 
+        if(count($path)>1){
+            $tpl_path = [PRJ_PATH.'app/views/'.$path[0]."/"];
+            $tpl_name = $path[1];
+        }else{
+            $tpl_path = [PRJ_PATH.'app/views/'];
+            $tpl_name = $path[0];
+        }
+        $cachePath = \Component\ConfigLoader::getConfig("CACHE_DIR");
+
+        $file     = new Filesystem;
+        $compiler = new BladeCompiler($file, $cachePath);
+
+        /*
+        $compiler->directive('datetime', function($timestamp) {
+            return preg_replace('/(\(\d+\))/', '<?php echo date("Y-m-d H:i:s", $1); ?>', $timestamp);
+        });*/
+
+        $resolver = new EngineResolver;
+        $resolver->register('blade', function () use ($compiler) {
+            return new CompilerEngine($compiler);
+        });
+
+        $factory = new Factory($resolver, new FileViewFinder($file, $tpl_path));
+
+        $factory->addExtension('tpl', 'blade');
+
+        return $factory->make($tpl_name,$this->datas)->render();
     }
 
     public function json($data)

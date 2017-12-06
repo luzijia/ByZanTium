@@ -66,8 +66,9 @@ class AutoLoad
 
     private function loadComposer()
     {
-        $filename = ROOT_PATH."ByZanTium/Vendor/composer/autoload_composer.php";
-        return self::import($filename);
+        $AppComposerFileName = ROOT_PATH."ByZanTium/Vendor/composer/autoload_composer.php";
+        $PrjComposerFileName = PRJ_PATH."app/vendor/composer/autoload_composer.php";
+        return array_merge(self::import($AppComposerFileName),self::import($PrjComposerFileName));
     }
 
     public static function import($filename)

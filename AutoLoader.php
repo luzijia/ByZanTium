@@ -25,6 +25,19 @@ class AutoLoad
                 return true;
             }
 
+            $composer_class = self::loadComposer();
+
+
+
+            foreach($composer_class as $pkey=>$pvalue)
+            {
+                if(strpos($class,$pkey)!==false)
+                {
+                    $fn = str_replace($pkey,$pvalue,$class).".php";
+
+                    self::registerClass($fn);
+                }
+            }
 
             foreach($POSTFIX_DIR_Array as $POSTFIX_DIR)
             {
@@ -33,16 +46,29 @@ class AutoLoad
 
                 $fn    = $POSTFIX_DIR.DIRECTORY_SEPARATOR.$class.".php";
 
-                if (file_exists($fn))
-                {
-                    require_once $fn;
-                    return true;
-                }
+                self::registerClass($fn);
+
             }
 
             return false;
 
         });
+    }
+
+    private static function registerClass($fn)
+    {
+        if (file_exists($fn))
+        {
+            require_once $fn;
+            return true;
+        }
+
+    }
+
+    private function loadComposer()
+    {
+        $filename = ROOT_PATH."ByZanTium/Vendor/composer/autoload_composer.php";
+        return self::import($filename);
     }
 
     public static function import($filename)

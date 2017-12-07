@@ -8,9 +8,15 @@ class AdminController extends \Component\Controller\BaseController
     public function beforeAction()
     {
     }
-    public function DetailAction()
+    public function WelcomeAction()
     {
         $this->display('Admin.admin');
+    }
+    public function getVideoListAction()
+    {
+        $this->assign("page",$this->getQuery("page"));
+        $this->assign("cate",$this->getQuery("cate"));
+        $this->display('hello');
     }
     public function afterAction()
     {

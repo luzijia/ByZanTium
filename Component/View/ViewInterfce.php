@@ -3,7 +3,7 @@ namespace Component\View;
 
 abstract class ViewInterfce implements \Component\ContainerInterface
 {
-    protected $data = [];
+    protected $datas = [];
 
     public function set($key,$value)
     {

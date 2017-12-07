@@ -1,11 +1,12 @@
 <?php
+
 define('TEMPLATE_DIR', dirname(__FILE__).'/app_files');
 
 $APP = [];
 
 read_conf('APPNAME');
 
-if(!preg_match('/^[a-z0-9-\._]+$/i', $APP['APPNAME'])){
+if(!preg_match('/^[a-z0-9-_]+$/i', $APP['APPNAME'])){
 	die("Error: Invalid APP NAME\n");
 }
 
@@ -53,7 +54,7 @@ function makeApp(){
 		$ps = explode('.', $src);
 		$ext = $ps[count($ps) - 1];
 
-		if(in_array($ext, array('sh', 'txt', 'conf', 'php'))){
+		if(in_array($ext, array('sh','conf','php'))){
 			$text = compile_file($src);
 		}else{
 			$text = file_get_contents($src);

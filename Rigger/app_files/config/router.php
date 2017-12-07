@@ -1,14 +1,13 @@
 <?php
-//Route->set(
-//  Array("/videoAudit/getList/{page}/{$page}/{date}/{$date}/{cate}/{$cate}"=>"admin/VideoAudit")
-//  // /VideoAudit/getList/page/1/cate/2
-//  // $_GET['page'] = 1
-//     $_GET['cate'] = 2;
-//  //rewrite
-//  Route->set("/videoAudit/getList/{page}/{$page}","admin","VideoAudit",false);
-//  Route->set(["URI"=>["Module","Ctr","Action","IsRewrite"]])
-//)
 
+//路由事例
+/*
+ * [
+ *    "URI模式，支持正则"=>[Module,Controller,Action]
+ * ]
+ */
 return[
     '/welcome/'=>['','Welcome','index'],
+    '/admin/welcome/'=>['admin','Admin','Welcome'],
+    '/admin/getVideoList/(page)/(\d+)/(cate)/(\d+)/'=>['admin','Admin','getVideoList'],
 ];

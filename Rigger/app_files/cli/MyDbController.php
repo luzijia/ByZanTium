@@ -3,8 +3,6 @@ use Component\Controller\BaseController;
 use Component\DB\MySqlBase;
 use Component\ConfigLoader;
 
-use Vendor\Blade\Filesystem;
-
 class MyDbController extends BaseController
 {
     public function beforeAction()
@@ -21,7 +19,6 @@ class MyDbController extends BaseController
         $db_config = ConfigLoader::getConfig("MYSQL");
         $db_config = $db_config['DEFAULT'];
         $DB = new MySqlBase($db_config['DB_HOST'], $db_config['DB_NAME'], $db_config['DB_USER'], $db_config['DB_PASSPORT']);
-        #$DB->setDebug();
 
         $DB->beginTransaction();
         $rows = $DB->query("delete from user");

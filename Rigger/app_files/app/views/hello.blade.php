@@ -1,0 +1,2 @@
+xxxxx
+{{$data['msg']}}

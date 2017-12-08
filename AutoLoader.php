@@ -64,7 +64,7 @@ class AutoLoad
 
     }
 
-    private function loadComposer()
+    private static function loadComposer()
     {
         $AppComposerFileName = ROOT_PATH."ByZanTium/Vendor/composer/autoload_composer.php";
         $PrjComposerFileName = PRJ_PATH."app/vendor/composer/autoload_composer.php";

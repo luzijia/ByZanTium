@@ -82,3 +82,8 @@ php {somewhere}/cli/index.php  mydb dotask
 $this->assign("data",$data);
 $this->display('Admin.admin');
 ```
+
+### 支持Composer
+修改项目里的vendor/composer/autoload_composer.php
+
+

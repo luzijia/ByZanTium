@@ -1,12 +1,4 @@
 <?php
-
-//Route->set(
-//  Array("/videoAudit/getList/{page}/{$page}/{date}/{$date}/{cate}/{$cate}"=>"admin/VideoAuditController")
-//  // /VideoAudit/getList/page/1/cate/2
-//  // $_GET['page'] = 1
-//     $_GET['cate'] = 2;
-//  //rewrite
-//)
 namespace Component\Router;
 
 #美化URI支持多少个参数对，默认支持6组参数

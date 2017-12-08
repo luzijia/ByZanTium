@@ -1,6 +1,4 @@
 <?php
-
-
 class App
 {
 	public static function run(\FrameWork\Base $container)
@@ -28,5 +26,12 @@ class App
         mb_internal_encoding($config['CHARSET']);
 
         \Component\ConfigLoader::initConfig($config);
+
+        set_exception_handler(function($exception){
+            echo "OPPS...";
+            echo $exception->getMessage();
+            echo "\n";
+        });
+
     }
 }

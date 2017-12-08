@@ -2,7 +2,7 @@
 namespace Component\DB;
 use PDO AS PDO;
 
-class MysqlBase
+class MySqlBase
 {
     private $Host;
     private $DBName;

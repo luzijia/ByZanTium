@@ -1,5 +1,5 @@
 # ByZanTium
-#### a light easy php framework
+#### a light easy PHP framework
 
 # 如何使用
 
@@ -30,12 +30,19 @@ app/
    cli/
         index.php
    config/
-        config.php
+        config.dev.php
+        config.prod.php
         router.php
    public/
         index.php
 
 ```
+####执行脚本
+
+sh {somewhere}/deploy/deploy.sh dev
+or
+sh {somewhere}/deploy/deploy.sh online
+
 ### WEB 模式
 
 #### get 参数获取
@@ -60,10 +67,11 @@ vim <somewhere>/config/router.php
 路由
 
   [
-     "URI模式，支持正则"=>[Module,Controller,Action]
+     "模式支持正则匹配"=>[Module,Controller,Action]
   ]
   return[
     'Welcome'=>["","WelcomeController","welcome"]
+
     '/admin/getVideoList/(page)/(\d+)/(cate)/(\d+)/'=>['admin','Admin','getVideoList'],
     ]
 ```
@@ -72,7 +80,9 @@ vim <somewhere>/config/router.php
 ### CLI 模式
 
 ```
-php {somewhere}/cli/index.php  mydb dotask
+php {somewhere}/cli/index.php  Controller Action 'x=1&b=2'
+
+php {somewhere}/cli/index.php  mydb dotask 'x=1&b=2'
 ```
 
 ### 模版
@@ -85,5 +95,3 @@ $this->display('Admin.admin');
 
 ### 支持Composer
 修改项目里的vendor/composer/autoload_composer.php
-
-

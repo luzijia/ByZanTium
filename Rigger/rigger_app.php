@@ -54,12 +54,15 @@ function makeApp(){
 		$ps = explode('.', $src);
 		$ext = $ps[count($ps) - 1];
 
-		if(in_array($ext, array('sh','conf','php'))){
-			$text = compile_file($src);
-		}else{
-			$text = file_get_contents($src);
-		}
-		file_put_contents($dst, $text);
+        if(in_array($ext, array('sh','conf','php'))){
+            $text = compile_file($src);
+        }else{
+            $text = file_get_contents($src);
+        }
+        file_put_contents($dst, $text);
+        if($ext=='sh'){
+            chmod($dst,0755);
+        }
 	}
 }
 

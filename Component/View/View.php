@@ -2,8 +2,6 @@
 
 namespace Component\View;
 
-require_once ROOT_PATH."/ByZanTium/Vendor/blade/src/helpers.php";
-
 use Vendor\Blade\FileViewFinder;
 use Vendor\Blade\Factory;
 use Vendor\Blade\Compilers\BladeCompiler;

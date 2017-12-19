@@ -5,5 +5,8 @@ $baseDir = dirname($vendorDir);
 
 return[
 
-    'Vendor\\Blade\\' => $vendorDir . '/blade/src/',
+    'Vendor\\Blade\\' =>[
+        "autoload_files"=>$vendorDir . '/blade/src/helpers.php',
+        "autoload_src"=>$vendorDir . '/blade/src/',
+    ]
 ];

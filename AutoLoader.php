@@ -31,9 +31,13 @@ class AutoLoad
             {
                 if(strpos($class,$pkey)!==false)
                 {
-                    $fn = str_replace($pkey,$pvalue,$class).".php";
+                    $fn = str_replace($pkey,$pvalue['autoload_src'],$class).".php";
 
                     self::registerClass($fn);
+                }
+
+                if(isset($pvalue['autoload_files'])){
+                    self::import($pvalue['autoload_files']);
                 }
             }
 

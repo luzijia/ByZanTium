@@ -3,6 +3,8 @@ class AutoLoad
 {
     public static function initAutoLoader()
     {
+        self::loadComposer();
+
         spl_autoload_register(function($class){
 
             $class_map =[];
@@ -23,22 +25,6 @@ class AutoLoad
                 $class = $class_map[$class];
                 include $class;
                 return true;
-            }
-
-            $composer_class = self::loadComposer();
-
-            foreach($composer_class as $pkey=>$pvalue)
-            {
-                if(strpos($class,$pkey)!==false)
-                {
-                    $fn = str_replace($pkey,$pvalue['autoload_src'],$class).".php";
-
-                    self::registerClass($fn);
-                }
-
-                if(isset($pvalue['autoload_files'])){
-                    self::import($pvalue['autoload_files']);
-                }
             }
 
             foreach($POSTFIX_DIR_Array as $POSTFIX_DIR)
@@ -70,9 +56,13 @@ class AutoLoad
 
     private static function loadComposer()
     {
-        $AppComposerFileName = ROOT_PATH."ByZanTium/Vendor/composer/autoload_composer.php";
-        $PrjComposerFileName = PRJ_PATH."app/vendor/composer/autoload_composer.php";
-        return array_merge(self::import($AppComposerFileName),self::import($PrjComposerFileName));
+         $composerFile = PRJ_PATH."app/vendor/autoload.php";
+         if(file_exists($composerFile))
+         {
+                self::import($composerFile);
+         }
+         return false;
+
     }
 
     public static function import($filename)

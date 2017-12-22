@@ -93,5 +93,5 @@ $this->assign("data",$data);
 $this->display('Admin.admin');
 ```
 
-### 支持Composer
-修改项目里的vendor/composer/autoload_composer.php
+### 兼容Composer
+cp Bin/composer  {somewhere you want to place}

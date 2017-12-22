@@ -14,11 +14,9 @@ class AutoLoad
 
             $POSTFIX_DIR_Array = array(
                 ROOT_PATH."ByZanTium",
+                PRJ_PATH."app",
                 PRJ_PATH."cli",
                 PRJ_PATH."app/controller",
-                PRJ_PATH."app/models",
-                PRJ_PATH."app/service",
-                PRJ_PATH."app/views",
             );
 
             if(isset($class_map[$class])){
@@ -56,7 +54,7 @@ class AutoLoad
 
     private static function loadComposer()
     {
-         $composerFile = PRJ_PATH."app/vendor/autoload.php";
+         $composerFile = PRJ_PATH."vendor/autoload.php";
          if(is_file($composerFile))
          {
                 self::import($composerFile);

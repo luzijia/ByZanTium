@@ -57,7 +57,7 @@ class AutoLoad
     private static function loadComposer()
     {
          $composerFile = PRJ_PATH."app/vendor/autoload.php";
-         if(file_exists($composerFile))
+         if(is_file($composerFile))
          {
                 self::import($composerFile);
          }

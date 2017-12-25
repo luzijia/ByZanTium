@@ -2,14 +2,6 @@
 
 namespace Component\View;
 
-use Vendor\Blade\FileViewFinder;
-use Vendor\Blade\Factory;
-use Vendor\Blade\Compilers\BladeCompiler;
-use Vendor\Blade\Engines\CompilerEngine;
-use Vendor\Blade\Filesystem;
-use Vendor\Blade\Engines\EngineResolver;
-
-
 class View extends \Component\View\ViewInterfce
 {
     protected $filePath = '';
@@ -43,26 +35,16 @@ class View extends \Component\View\ViewInterfce
             $tpl_path = [PRJ_PATH.'app/views/'];
             $tpl_name = $path[0];
         }
+
         $cachePath = \Component\ConfigLoader::getConfig("CACHE_DIR");
 
-        $file     = new Filesystem;
-        $compiler = new BladeCompiler($file, $cachePath);
+        extract($this->datas);
 
-        /*
-        $compiler->directive('datetime', function($timestamp) {
-            return preg_replace('/(\(\d+\))/', '<?php echo date("Y-m-d H:i:s", $1); ?>', $timestamp);
-        });*/
+        ob_start();
 
-        $resolver = new EngineResolver;
-        $resolver->register('blade', function () use ($compiler) {
-            return new CompilerEngine($compiler);
-        });
+        include $tpl_path.$tpl_name;
 
-        $factory = new Factory($resolver, new FileViewFinder($file, $tpl_path));
-
-        $factory->addExtension('tpl', 'blade');
-
-        return $factory->make($tpl_name,$this->datas)->render();
+        return ob_get_contents();
     }
 
     public function json($data)
